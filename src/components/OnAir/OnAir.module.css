@@ -1,0 +1,69 @@
+.on_air_wrapper {
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  width: 30vw;
+  margin-left: auto;
+  margin-right: 17px;
+  margin-top: 20px;
+  padding: 0 20px 10px;
+}
+
+.on_air_wrapper p {
+  margin: 0;
+  font-size: 14px;
+  padding-bottom: 1.7vh;
+}
+
+.on_air {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  user-select: none;
+  font-weight: bold;
+}
+
+.on_air_animation {
+  animation: neonGlow 1s ease infinite;
+}
+
+@media (max-width: 1200px) {
+  .on_air_wrapper {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 1050px) {
+  .on_air_wrapper {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 950px) {
+  .on_air_wrapper {
+    width: 50vw;
+  }
+}
+
+@media (orientation: portrait) {
+  .on_air_wrapper {
+    width: auto;
+    margin: 10px 5px;
+  }
+
+  .on_air_wrapper p {
+    padding-bottom: 1.3vh;
+  }
+}
+
+@keyframes neonGlow {
+  0% {
+    text-shadow: 0 0 10px limegreen, 0 0 15px limegreen, 0 0 20px limegreen;
+  }
+  50% {
+    text-shadow: 0 0 7px lime, 0 0 11px lime, 0 0 15px lime;
+  }
+  100% {
+    text-shadow: 0 0 1px limegreen, 0 0 5px limegreen, 0 0 9px limegreen;
+  }
+}

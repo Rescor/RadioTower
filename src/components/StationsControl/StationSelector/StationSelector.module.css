@@ -1,0 +1,32 @@
+.selectors_wrapper {
+  margin-left: auto;
+  margin-right: 20px;
+  margin-block: auto;
+}
+
+.select_wrapper {
+  display: inline-block;
+}
+
+.select {
+  background: 0;
+  border: 0;
+  outline: none;
+  color: lime;
+  font: inherit;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.select option {
+  color: #cbcbcb;
+  background-color: rgb(31, 31, 31);
+}
+
+.select:focus {
+  outline: none;
+}
+
+.select::-ms-expand {
+  display: none;
+}

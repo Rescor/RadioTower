@@ -1,0 +1,47 @@
+.logo_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+  user-select: none;
+}
+
+.logo {
+  font-size: 1.3vw;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  padding: 20px 35px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+@media (max-width: 1100px) {
+  .logo {
+    font-size: 1.5vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .logo {
+    font-size: 1.8vw;
+  }
+}
+
+@media (max-width: 800px) {
+  .logo {
+    font-size: 1.9vw;
+  }
+}
+
+@media (orientation: portrait) {
+  .logo_wrapper {
+    margin: 0;
+  }
+
+  .logo {
+    font-size: 1.95vw;
+    padding: 15px;
+    width: 100%;
+    border-radius: 0;
+  }
+}
