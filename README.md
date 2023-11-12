@@ -10,6 +10,11 @@ Website: [radiotower.netstalking.org](http://radiotower.netstalking.org)
 
 In the project directory, you can run:
 
+### `npm install`
+
+Install the application with all dependencies.\
+You need to do this before other actions.
+
 ### `npm start`
 
 Runs the app in the development mode.\
