@@ -108,12 +108,13 @@ export default function OnAir(props) {
         })
       } catch (e) { console.log(e) }
     }
-    await getMdsData();
-    await getProvodachData();
-    await getAnonFMData();
-    await getAnisonData();
-    await getRTData();
-
+    await Promise.all([
+      getMdsData(),
+      getProvodachData(),
+      getAnonFMData(),
+      getAnisonData(),
+      getRTData(),
+    ])
     //const keygenResp = await fetch("https://rsx.aww.xyz/rtproxy.php");
     //const keygenData = await keygenResp.json();
     //updatedOnAir[2] = he.decode(keygenData.song);
