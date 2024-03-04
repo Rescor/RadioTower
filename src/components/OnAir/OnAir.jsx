@@ -26,7 +26,8 @@ export default function OnAir(props) {
 
   useEffect(() => {
     fetchData();
-    setInterval(() => fetchData(), 10000);
+    const fetchDataInterval = setInterval(() => fetchData(), 10000);
+    return () => clearInterval(fetchDataInterval);
   }, []);
 
   async function fetchData() {
