@@ -1,5 +1,5 @@
 .background {
-  background: url(/public/assets/bg01.jpg) center/cover no-repeat rgba(0,0,0,0.73);
+  background: url(/assets/bg01.jpg) center/cover no-repeat rgba(0,0,0,0.73);
   background-blend-mode: multiply;
   position: absolute;
   width: 100%;
