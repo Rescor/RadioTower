@@ -38,7 +38,7 @@ export default function OnAir(props) {
         const data = await response.json();
         setOnAir(prev => {
           const updatedOnAir = [...prev];
-          updatedOnAir[0] = he.decode(data.icestats.source.title);
+          updatedOnAir[0] = he.decode(data.icestats.source[0].title);
           return updatedOnAir;
         })
       } catch (e) { console.log(e) }
