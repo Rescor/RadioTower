@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import he from "he";
+import * as he from "he";
 import Settings from "../Settings/Settings";
 import styles from "./OnAir.module.css";
 
@@ -132,7 +132,7 @@ export default function OnAir(props) {
 
       {station_names.map((station, i) =>
         <p style={{color: "lime"}} key={station}>
-          {station} > {onAir[i] ? onAir[i] : ""}
+          {station} &gt; {onAir[i] ? onAir[i] : ""}
         </p>)}
 
       {showSettings && <Settings />}
