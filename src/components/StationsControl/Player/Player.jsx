@@ -4,19 +4,26 @@ export default function Player(props) {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (props.isPlaying) {
-      audioRef.current.src = props.src;
-      props.setLoadingStatus();
-      audioRef.current.load();
-      audioRef.current.oncanplay = () => {
-        audioRef.current.play();
-        props.resetStatus();
-      }
-    } else {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+    const audio = audioRef.current;
+
+    if (!props.isPlaying) {
+      audio.oncanplay = null;
+      audio.onerror = null;
+      audio.pause();
+      return;
     }
+
+    audio.src = props.src;
+    props.onLoading();
+    audio.oncanplay = () => {
+      audio.play()
+        .then(() => props.onPlaying())
+        .catch(e => {
+          if (e.name !== "AbortError") props.onPlayBlocked();
+        });
+    };
+    audio.onerror = () => props.onError();
+    audio.load();
   }, [props.isPlaying, props.src]);
 
   return <audio ref={audioRef} src={props.src} preload="none"/>

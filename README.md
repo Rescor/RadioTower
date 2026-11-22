@@ -3,7 +3,7 @@
 Welcome to the Radio Tower!\
 Test broadcasting...
 
-Website: [radiotower.netstalking.org](http://radiotower.netstalking.org)
+Website: [radiotower.netstalking.org](https://radiotower.netstalking.org)
 
 ## This app is written on React + Vite, so...
 ### Available Scripts

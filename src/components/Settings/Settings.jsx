@@ -1,16 +1,16 @@
 // import styles from "./Settings.module.css";
 
+export function resetSettings() {
+  localStorage.clear();
+  window.location.reload();
+}
+
 export default function Settings() {
   function changeLogoAnimation() {
     if (!localStorage.getItem("Animation") || localStorage.getItem("Animation") === "Enabled" ) {
       localStorage.setItem("Animation", "Disabled");
     }
     else localStorage.setItem("Animation", "Enabled");
-    window.location.reload();
-  }
-
-  function resetSettings() {
-    localStorage.clear();
     window.location.reload();
   }
 
