@@ -1,23 +1,18 @@
 import { useState, useEffect } from "react";
-import * as he from "he";
 import Settings from "../Settings/Settings";
+import { stations } from "../../stations";
+import { fetchStatus, parseNowPlaying } from "../../nowPlaying";
 import styles from "./OnAir.module.css";
 
-const station_names = [
-  "МДС",
-  "Проводач",
-  "Radio Anonymous",
-  "Anison FM",
-  //'KeyGen FM',
-  "Industrial Junk",
-  "Lonesome Town",
-  "Mad Dog FM",
-  "RRN Radio",
-  "Vigilante 2084",
-];
+const statusGroups = new Map();
+for (const station of stations) {
+  const { url } = station.now_playing;
+  if (!statusGroups.has(url)) statusGroups.set(url, []);
+  statusGroups.get(url).push(station);
+}
 
 export default function OnAir(props) {
-  const [onAir, setOnAir] = useState([]);
+  const [onAir, setOnAir] = useState({});
   const [showSettings, setShowSettings] = useState(false);
 
   const animationStatus = localStorage.getItem("Animation");
@@ -30,95 +25,18 @@ export default function OnAir(props) {
     return () => clearInterval(fetchDataInterval);
   }, []);
 
-  async function fetchData() {
-    // MDS
-    async function getMdsData() {
-      try {
-        const response = await fetch("http://mds-station.com:8000/status-json.xsl");
-        const data = await response.json();
-        setOnAir(prev => {
-          const updatedOnAir = [...prev];
-          updatedOnAir[0] = he.decode(data.icestats.source[0].title);
-          return updatedOnAir;
-        })
-      } catch (e) { console.log(e) }
-    }
-
-    // Provodach
-    async function getProvodachData() {
-      try {
-        const response = await fetch("https://station.waveradio.org/status-json.xsl");
-        const data = await response.json();
-        setOnAir(prev => {
-          const updatedOnAir = [...prev];
-          updatedOnAir[1] = he.decode(data.icestats.source[0].title);
-          return updatedOnAir;
-        })
-      } catch (e) { console.log(e) }
-    }
-
-    // anon.fm
-    async function getAnonFMData() {
-      try {
-        const response = await fetch("https://anon.fm/state.txt");
-        const data = await response.text();
-        setOnAir(prev => {
-          const updatedOnAir = [...prev];
-          const lines = data.split('\n');
-
-          for (let i = 0; i < lines.length; i++) {
-            if (lines[i].trim() === "Title" || lines[i].trim() === "Name") {
-              updatedOnAir[2] = he.decode(lines[i + 1]);
-              break;
-            }
+  function fetchData() {
+    for (const [url, group] of statusGroups) {
+      fetchStatus(url, group[0].now_playing.type)
+        .then(data => {
+          const titles = {};
+          for (const station of group) {
+            titles[station.id] = parseNowPlaying(station.now_playing, data);
           }
-          return updatedOnAir;
+          setOnAir(prev => ({ ...prev, ...titles }));
         })
-      } catch (e) { console.log(e) }
+        .catch(e => console.log(e));
     }
-
-    // AnisonFM
-    async function getAnisonData() {
-      try {
-        const response = await fetch("https://rsx.aww.xyz/rtproxy.php", {
-          headers: { "Referer": "https://anison.fm" }
-        });
-        const data = await response.json();
-        const song = JSON.parse(data.song);
-
-        setOnAir(prev => {
-          const updatedOnAir = [...prev];
-          updatedOnAir[3] = `${song.on_air.anime} - ${song.on_air.track}`;
-          return updatedOnAir;
-        })
-      } catch (e) { console.log(e) }
-    }
-
-    // Radiotower
-    async function getRTData() {
-      try {
-        const response = await fetch("http://listen.radiotower.su:8000/status-json.xsl");
-        const data = await response.json();
-
-        setOnAir(prev => {
-          const updatedOnAir = [...prev];
-          for (let i = 0; i < 5; i++) {
-            updatedOnAir[i+4] = he.decode(data.icestats.source[i*2].title);
-          }
-          return updatedOnAir;
-        })
-      } catch (e) { console.log(e) }
-    }
-    await Promise.all([
-      getMdsData(),
-      getProvodachData(),
-      getAnonFMData(),
-      getAnisonData(),
-      getRTData(),
-    ])
-    //const keygenResp = await fetch("https://rsx.aww.xyz/rtproxy.php");
-    //const keygenData = await keygenResp.json();
-    //updatedOnAir[2] = he.decode(keygenData.song);
   }
 
   function openSettings() {
@@ -126,13 +44,13 @@ export default function OnAir(props) {
   }
 
   return <div className={styles.on_air_wrapper}>
-      <pre className={classes} onClick={openSettings}>
+      <button className={classes} onClick={openSettings}>
         {` .-. . .   .-. .-. .-.\n| | |\\|   |-|  |  |(\n \`-' ' \`   \` ' \`-' ' '`}
-      </pre>
+      </button>
 
-      {station_names.map((station, i) =>
-        <p style={{color: "lime"}} key={station}>
-          {station} &gt; {onAir[i] ? onAir[i] : ""}
+      {stations.map(station =>
+        <p style={{color: "lime"}} key={station.id}>
+          {station.short_name ?? station.name} &gt; {onAir[station.id] ?? ""}
         </p>)}
 
       {showSettings && <Settings />}

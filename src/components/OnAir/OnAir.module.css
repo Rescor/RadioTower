@@ -16,6 +16,15 @@
 }
 
 .on_air {
+  display: block;
+  width: 100%;
+  margin: 0;
+  background: none;
+  border: 0;
+  color: lime;
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre;
+  cursor: pointer;
   font-size: 14px;
   text-align: center;
   padding: 10px;

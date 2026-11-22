@@ -5,10 +5,10 @@ export default function StationSelector(props) {
     <div className={styles.select_wrapper}>
       <select className={styles.select}
         onChange={props.changeHandler}
-        defaultValue={JSON.stringify(props.currentStation)}>
+        value={props.currentStation.id}>
         {props.stations.map(station => (
-          <option key={station.name}
-            value={JSON.stringify(station)}>
+          <option key={station.id}
+            value={station.id}>
               {station.name}
           </option>))}
       </select>
@@ -17,7 +17,7 @@ export default function StationSelector(props) {
     <div className={styles.select_wrapper}>
       <select className={styles.select}
         value={props.sourceId}
-        onChange={(event) => props.sourceHandler(event.target.value)}>
+        onChange={(event) => props.sourceHandler(Number(event.target.value))}>
         {props.currentStation.sources.map((source, i) =>
           <option key={source.url}
             value={i}>
