@@ -1,11 +1,9 @@
 .selectors_wrapper {
+  display: flex;
+  flex-shrink: 0;
   margin-left: auto;
   margin-right: 20px;
   margin-block: auto;
-}
-
-.select_wrapper {
-  display: inline-block;
 }
 
 .select {
@@ -29,4 +27,14 @@
 
 .select::-ms-expand {
   display: none;
+}
+
+@media (orientation: portrait) {
+  .selectors_wrapper {
+    margin-right: 15px;
+  }
+
+  .select:last-child {
+    padding-right: 0;
+  }
 }
