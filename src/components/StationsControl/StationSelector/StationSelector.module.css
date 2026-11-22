@@ -28,3 +28,13 @@
 .select::-ms-expand {
   display: none;
 }
+
+@media (orientation: portrait) {
+  .selectors_wrapper {
+    margin-right: 15px;
+  }
+
+  .select:last-child {
+    padding-right: 0;
+  }
+}
