@@ -22,8 +22,8 @@ export const stations = [
     name: "Модель для сборки",
     short_name: "МДС",
     sources: [
-      {info: "Mirror 1", url: "https://mds-station.com:8443/mds"},
-      {info: "Mirror 2", url: "https://stream.mds-station.com:8443/01-mds"},
+      {info: "Mirror 1", url: "https://stream.mds-station.com:8443/01-mds"},
+      {info: "Mirror 2", url: "https://mds-station.com:8443/mds"},
     ],
     default_source: 0,
     now_playing: {type: "icecast", url: "https://mds-station.com:8443/status-json.xsl", mount: "/mds"},
